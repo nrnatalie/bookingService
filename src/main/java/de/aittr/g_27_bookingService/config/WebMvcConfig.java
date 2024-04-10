@@ -1,4 +1,4 @@
-package config;
+package de.aittr.g_27_bookingService.config;
 
 
 

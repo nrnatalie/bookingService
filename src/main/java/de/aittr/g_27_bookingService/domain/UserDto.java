@@ -1,16 +1,13 @@
 package de.aittr.g_27_bookingService.domain;
 
-import java.util.Objects;
-
-public class JpaUser implements User {
+public class UserDto {
   private String email;
   private String password;
 
 
-  public JpaUser() {
-  }
+  public UserDto() {}
 
-  public JpaUser(String email, String password) {
+  public UserDto(String email, String password) {
     this.email = email;
     this.password = password;
   }
@@ -34,22 +31,8 @@ public class JpaUser implements User {
 
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    JpaUser jpaUser = (JpaUser) o;
-    return Objects.equals(email, jpaUser.email) &&
-        Objects.equals(password, jpaUser.password);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(email, password);
-  }
-
-  @Override
   public String toString() {
-    return "JpaUser{" +
+    return "UserDto{" +
         "email='" + email + '\'' +
         ", password='[PROTECTED]'" +
         '}';

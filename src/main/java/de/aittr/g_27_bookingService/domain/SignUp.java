@@ -1,5 +1,5 @@
 package de.aittr.g_27_bookingService.domain;
-public interface Registration {
+public interface SignUp {
   String getEmail();
   void setEmail(String email);
 

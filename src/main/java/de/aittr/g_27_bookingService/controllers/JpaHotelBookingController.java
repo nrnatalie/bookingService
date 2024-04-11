@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jpa-hotel-bookings")
+
 public class JpaHotelBookingController {
 
     @Autowired

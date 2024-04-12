@@ -1,31 +1,85 @@
 package de.aittr.g_27_bookingService.services;
 
+
 import de.aittr.g_27_bookingService.domain.JpaUser;
 
 import de.aittr.g_27_bookingService.repositories.UserRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-  private final UserRepository userRepository;
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
   @Autowired
-  public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+  private UserRepository userRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
   }
 
+
   public void registerUser(JpaUser user) {
+
     if (userRepository.findByEmail(user.getEmail()).isPresent()) {
       throw new RuntimeException("User with email " + user.getEmail() + " already exists.");
     }
-    String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+
+    String hashedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(hashedPassword);
-    userRepository.save(
-        user);
+    userRepository.save(user);
+  }
+
+  public JpaUser createUser(JpaUser user) {
+
+    String encodedPassword = passwordEncoder.encode(user.getPassword());
+    user.setPassword(encodedPassword);
+
+    return userRepository.save(user);
+  }
+
+  public List<JpaUser> findAllUsers() {
+    return userRepository.findAll();
+  }
+
+  public JpaUser findUserById(int id) {
+    return userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+  }
+
+
+  public JpaUser updateUser(int id, JpaUser user) {
+
+    JpaUser existingUser = userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+    existingUser.setEmail(user.getEmail());
+    existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
+    return userRepository.save(existingUser);
+  }
+
+  //  public boolean deleteUser(int id) {
+//    // Проверяем, существует ли пользователь с данным ID
+//    JpaUser user = userRepository.findById(id)
+//        .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+//
+//    // Удаление пользователя из репозитория
+//    userRepository.delete(user);
+//
+//
+//    return true;
+//  }
+//}
+
+  public boolean deleteUser(int id) {
+    return userRepository.findById(id).map(user -> {
+      userRepository.delete(user);
+      return true;
+    }).orElse(false); // Возвращаем false, если пользователь не найден
   }
 }

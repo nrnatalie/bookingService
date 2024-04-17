@@ -1,12 +1,8 @@
 package de.aittr.g_27_bookingService.services;
-
-
 import de.aittr.g_27_bookingService.domain.JpaUser;
-
 import de.aittr.g_27_bookingService.repositories.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +76,29 @@ public class UserService {
     return userRepository.findById(id).map(user -> {
       userRepository.delete(user);
       return true;
-    }).orElse(false); // Возвращаем false, если пользователь не найден
+    }).orElse(false);
+  }
+
+  public boolean checkEmailExists(String email) {
+    return userRepository.findByEmail(email).isPresent();
+  }
+
+  public boolean validateEmail(String email) {
+    if (email == null) {
+      return false;
+    }
+    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    return email.matches(emailRegex);
+  }
+
+  public boolean validatePassword(String password) {
+    if (password == null) {
+      return false;
+    }
+    int minLength = 8;
+
+    String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{" + minLength + ",}$";
+
+    return password.matches(passwordRegex);
   }
 }

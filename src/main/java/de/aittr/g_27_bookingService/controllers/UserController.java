@@ -36,14 +36,17 @@
 //}
 
 package de.aittr.g_27_bookingService.controllers;
-
 import de.aittr.g_27_bookingService.domain.JpaUser;
-
+import de.aittr.g_27_bookingService.domain.User;
 import de.aittr.g_27_bookingService.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -53,13 +56,50 @@ public class UserController {
   @Autowired
   private UserService userService;
 
+  @PostMapping("/register")
+  @Operation(summary = "Register a new user", description = "Provide an email and password to register a new user",
+      responses = {
+          @ApiResponse(responseCode = "200", description = "User registered successfully",
+              content = @Content(schema = @Schema(implementation = JpaUser.class))),
+          @ApiResponse(responseCode = "400", description = "Invalid email format or password does not meet security requirements"),
+          @ApiResponse(responseCode = "409", description = "Email already exists")
+      }
+  )
 
-  @PostMapping
-  public ResponseEntity<JpaUser> createUser(@RequestBody JpaUser user) {
-    JpaUser savedUser = userService.createUser(user);
+  public ResponseEntity<JpaUser> createUser(@RequestBody User user) {
+    if (!isValidEmail(user.getEmail())) {
+      return ResponseEntity.badRequest().body(null);
+    }
+    if (!isValidPassword(user.getPassword())) {
+      return ResponseEntity.badRequest().body(null);
+    }
+    if (userService.checkEmailExists(user.getEmail())) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+    }
+
+    JpaUser jpaUser = convertUserToJpaUser(user);
+    JpaUser savedUser = userService.createUser(jpaUser);
     return ResponseEntity.ok(savedUser);
   }
 
+  private boolean isValidEmail(String email) {
+    String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+    return email.matches(regex);
+  }
+
+  private boolean isValidPassword(String password) {
+    String passwordRequirementsRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    return password.matches(passwordRequirementsRegex);
+  }
+
+  private JpaUser convertUserToJpaUser(User user) {
+    // Реализуйте логику преобразования
+    JpaUser jpaUser = new JpaUser();
+    jpaUser.setEmail(user.getEmail());
+    jpaUser.setPassword(user.getPassword());
+
+    return jpaUser;
+  }
 
   @GetMapping
   public ResponseEntity<List<JpaUser>> getAllUsers() {
@@ -78,7 +118,6 @@ public class UserController {
     }
   }
 
-
   @PutMapping("/{id}")
   public ResponseEntity<JpaUser> updateUser(@PathVariable int id, @RequestBody JpaUser user) {
     JpaUser updatedUser = userService.updateUser(id, user);
@@ -88,7 +127,6 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
-
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteUser(@PathVariable int id) {

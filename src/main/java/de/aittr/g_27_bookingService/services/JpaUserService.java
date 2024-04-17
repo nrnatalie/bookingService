@@ -1,5 +1,4 @@
 package de.aittr.g_27_bookingService.services;
-
 import de.aittr.g_27_bookingService.domain.JpaUser;
 import de.aittr.g_27_bookingService.domain.UserDto;
 import de.aittr.g_27_bookingService.repositories.UserRepository;

@@ -19,6 +19,7 @@ public class UserService {
   }
 
 
+
   public void registerUser(JpaUser user) {
 
     if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -100,5 +101,10 @@ public class UserService {
     String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{" + minLength + ",}$";
 
     return password.matches(passwordRegex);
+  }
+
+
+  public boolean existsById(int id) {
+    return userRepository.existsById(id);
   }
 }

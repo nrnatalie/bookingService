@@ -52,8 +52,7 @@ public class UserController {
   }
 
   private boolean isValidPassword(String password) {
-    String passwordRequirementsRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-    return password.matches(passwordRequirementsRegex);
+    return password.length() >= 6;
   }
 
   private JpaUser convertUserToJpaUser(User user) {

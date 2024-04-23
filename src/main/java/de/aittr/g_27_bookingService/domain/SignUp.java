@@ -6,6 +6,6 @@ public interface SignUp {
   String getPassword();
   void setPassword(String password);
 
-  String getLogin();
-  void setLogin(String login);
+  String getConfirmPassword();
+  void setConfirmPassword(String confirmPassword);
 }

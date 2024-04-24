@@ -3,10 +3,17 @@ package de.aittr.g_27_bookingService.domain;
 import java.util.Objects;
 
 public class SignUpDto {
+  private String username;
   private String email;
   private String password;
-  private String confirmPassword;
 
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
   public String getEmail() {
     return email;
@@ -24,14 +31,6 @@ public class SignUpDto {
     this.password = password;
   }
 
-  public String getConfirmPassword() {
-    return confirmPassword;
-  }
-
-  public void setConfirmPassword(String confirmPassword) {
-    this.confirmPassword = confirmPassword;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -41,21 +40,22 @@ public class SignUpDto {
       return false;
     }
     SignUpDto signUpDto = (SignUpDto) o;
-    return Objects.equals(email, signUpDto.email) && Objects.equals(password,
-        signUpDto.password) && Objects.equals(confirmPassword, signUpDto.confirmPassword);
+    return Objects.equals(username, signUpDto.username) &&
+        Objects.equals(email, signUpDto.email) &&
+        Objects.equals(password, signUpDto.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, password, confirmPassword);
+    return Objects.hash(username, email, password);
   }
 
   @Override
   public String toString() {
     return "SignUpDto{" +
-        "email='" + email + '\'' +
+        "username='" + username + '\'' +
+        ", email='" + email + '\'' +
         ", password='" + password + '\'' +
-        ", confirmPassword='" + confirmPassword + '\'' +
         '}';
   }
 }

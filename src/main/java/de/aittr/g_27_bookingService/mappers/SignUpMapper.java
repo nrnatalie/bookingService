@@ -15,7 +15,7 @@ public class SignUpMapper {
     }
     JpaSignUp signUp = new JpaSignUp();
     signUp.setEmail(dto.getEmail());
-    signUp.setPassword(encoder.encode(dto.getPassword()));
+    signUp.setPassword(encoder.encode(dto.getPassword())); // Хеширование пароля перед сохранением
     return signUp;
   }
 
@@ -26,7 +26,7 @@ public class SignUpMapper {
     }
     SignUpDto dto = new SignUpDto();
     dto.setEmail(jpaSignUp.getEmail());
-    dto.setPassword("");
+    dto.setPassword(""); // Пароль не передается обратно в Dto
     return dto;
   }
 }

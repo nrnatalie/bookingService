@@ -28,13 +28,10 @@ public class SignUpController {
       content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
   public ResponseEntity<String> registerUser(@RequestBody SignUpDto signUpDto) throws Exception {
     try {
-
       if (!validateSignUpDto(signUpDto)) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid sign up data.");
       }
-
       JpaSignUp jpaSignUp = SignUpMapper.toEntity(signUpDto);
-
       JpaSignUp registeredUser = signUpService.registerUser(jpaSignUp);
       if (registeredUser != null) {
         return ResponseEntity.ok("User registered successfully.");

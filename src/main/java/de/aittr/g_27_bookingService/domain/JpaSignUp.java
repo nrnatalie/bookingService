@@ -13,6 +13,7 @@ public class JpaSignUp implements SignUp{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
+  private String username; // Добавлено поле username
   private String email;
   private String password;
 
@@ -25,6 +26,14 @@ public class JpaSignUp implements SignUp{
 
   public void setId(Integer id) {
     this.id = id;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getEmail() {
@@ -43,15 +52,7 @@ public class JpaSignUp implements SignUp{
     this.password = password;
   }
 
-  @Override
-  public String getConfirmPassword() {
-    return null;
-  }
 
-  @Override
-  public void setConfirmPassword(String confirmPassword) {
-
-  }
 
   @Override
   public boolean equals(Object o) {

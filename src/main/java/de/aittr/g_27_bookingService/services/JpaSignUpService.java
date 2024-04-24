@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 public class JpaSignUpService {
 
@@ -33,6 +32,7 @@ public class JpaSignUpService {
     // Установка id на 0 перед сохранением нового пользователя
     newUser.setId(0);
 
+    // Хеширование пароля перед сохранением
     newUser.setPassword(hashPassword(newUser.getPassword()));
 
     return signUpRepository.save(newUser);

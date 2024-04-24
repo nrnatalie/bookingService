@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 public class JpaUser implements User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -20,6 +21,7 @@ public class JpaUser implements User {
 
   public JpaUser() {
   }
+
   public JpaUser(String email, String password) {
     this.email = email;
     this.password = password;
@@ -45,8 +47,10 @@ public class JpaUser implements User {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
     JpaUser jpaUser = (JpaUser) o;
     return Objects.equals(email, jpaUser.email) &&
         Objects.equals(password, jpaUser.password);
@@ -63,5 +67,12 @@ public class JpaUser implements User {
         "email='" + email + '\'' +
         ", password='[PROTECTED]'" +
         '}';
+  }
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }

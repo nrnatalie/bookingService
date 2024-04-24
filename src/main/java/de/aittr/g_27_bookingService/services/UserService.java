@@ -8,23 +8,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
-
-
   public void registerUser(JpaUser user) {
-
     if (userRepository.findByEmail(user.getEmail()).isPresent()) {
       throw new RuntimeException("User with email " + user.getEmail() + " already exists.");
     }
+
+    // Установка id на 0 перед сохранением нового пользователя
+    user.setId(0);
 
     String hashedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(hashedPassword);
@@ -32,12 +31,16 @@ public class UserService {
   }
 
   public JpaUser createUser(JpaUser user) {
+    // Установка id на 0 перед сохранением нового пользователя
+    user.setId(0);
 
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
 
     return userRepository.save(user);
   }
+
+
 
   public List<JpaUser> findAllUsers() {
     return userRepository.findAll();
@@ -60,18 +63,6 @@ public class UserService {
     return userRepository.save(existingUser);
   }
 
-  //  public boolean deleteUser(int id) {
-//    // Проверяем, существует ли пользователь с данным ID
-//    JpaUser user = userRepository.findById(id)
-//        .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-//
-//    // Удаление пользователя из репозитория
-//    userRepository.delete(user);
-//
-//
-//    return true;
-//  }
-//}
 
   public boolean deleteUser(int id) {
     return userRepository.findById(id).map(user -> {

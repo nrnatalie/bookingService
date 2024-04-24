@@ -1,11 +1,7 @@
 package de.aittr.g_27_bookingService.controllers;
-
-
 import de.aittr.g_27_bookingService.domain.JpaSignUp;
-
 import de.aittr.g_27_bookingService.domain.SignUpDto;
 import de.aittr.g_27_bookingService.mappers.SignUpMapper;
-
 import de.aittr.g_27_bookingService.services.SignUpException;
 import de.aittr.g_27_bookingService.services.SignUpService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,4 +1,4 @@
-package de.aittr.g_27_bookingService.repository;
+package de.aittr.g_27_bookingService.repositories;
 
 import de.aittr.g_27_bookingService.domain.JpaSignUp;
 import org.springframework.data.jpa.repository.JpaRepository;

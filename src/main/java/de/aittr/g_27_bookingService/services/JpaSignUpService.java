@@ -1,7 +1,7 @@
 package de.aittr.g_27_bookingService.services;
 
 import de.aittr.g_27_bookingService.domain.JpaSignUp;
-import de.aittr.g_27_bookingService.repository.SignUpRepository;
+import de.aittr.g_27_bookingService.repositories.SignUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class JpaSignUpService {
 
 
   private String hashPassword(String password) {
-    // Псевдокод, на самом деле следует использовать библиотеку для хеширования, например BCrypt
-    return password; // Возвращаем "хешированный" пароль, замените на реальное хеширование
+
+    return password;
   }
 }

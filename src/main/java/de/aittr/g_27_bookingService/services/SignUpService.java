@@ -1,7 +1,8 @@
 package de.aittr.g_27_bookingService.services;
 
 import de.aittr.g_27_bookingService.domain.JpaSignUp;
-import de.aittr.g_27_bookingService.repository.SignUpRepository;
+
+import de.aittr.g_27_bookingService.repositories.SignUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,7 @@
 package de.aittr.g_27_bookingService.domain;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,9 +13,16 @@ import javax.persistence.GenerationType;
 public class JpaSignUp implements SignUp{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Integer id;
-  private String username; // Добавлено поле username
+
+  @Column(name = "username") // Добавлено поле username
+  private String username;
+
+  @Column(name = "email")
   private String email;
+
+  @Column(name = "password")
   private String password;
 
   public JpaSignUp() {

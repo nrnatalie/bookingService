@@ -26,7 +26,7 @@ public class SignUpController {
   @ApiResponse(responseCode = "200", description = "User registered successfully")
   @ApiResponse(responseCode = "400", description = "Bad request. Invalid sign up data or failed to register user",
       content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-  public ResponseEntity<String> registerUser(@RequestBody SignUpDto signUpDto) throws Exception {
+  public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) throws Exception {
     try {
       if (!validateSignUpDto(signUpDto)) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid sign up data.");
@@ -34,7 +34,7 @@ public class SignUpController {
       JpaSignUp jpaSignUp = SignUpMapper.toEntity(signUpDto);
       JpaSignUp registeredUser = signUpService.registerUser(jpaSignUp);
       if (registeredUser != null) {
-        return ResponseEntity.ok("User registered successfully.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
       } else {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user.");
       }
@@ -43,35 +43,20 @@ public class SignUpController {
     }
   }
 
-
   private boolean validateSignUpDto(SignUpDto signUpDto) {
-
-    if (signUpDto.getEmail() == null || signUpDto.getPassword() == null) {
+    if (signUpDto.getEmail() == null || signUpDto.getPassword() == null || signUpDto.getPassword()
+        .isEmpty()) {
       return false;
     }
-
-
-    if (!validateEmail(signUpDto.getEmail())) {
-      return false;
-    }
-
-
-    if (!validatePassword(signUpDto.getPassword())) {
-      return false;
-    }
-    return true;
+    return isEmailValid(signUpDto.getEmail()) && isPasswordValid(signUpDto.getPassword());
   }
 
-  private boolean validatePassword(String password) {
-
+  private boolean isPasswordValid(String password) {
     return password.length() >= 6;
   }
 
-  private boolean validateEmail(String email) {
-
+  private boolean isEmailValid(String email) {
     String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-
-
     return email.matches(regex);
   }
 }

@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .authorizeRequests()
         .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-        .anyRequest().authenticated() // Для остальных URL требовать аутентификацию
+        .anyRequest().authenticated()
         .and()
         .formLogin()
         .and()

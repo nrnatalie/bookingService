@@ -16,7 +16,7 @@ public class JpaSignUp implements SignUp{
   @Column(name = "id")
   private Integer id;
 
-  @Column(name = "username") // Добавлено поле username
+  @Column(name = "username")
   private String username;
 
   @Column(name = "email")

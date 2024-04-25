@@ -29,10 +29,10 @@ public class JpaSignUpService {
       throw new SignUpException("User with this email already exists.");
     }
 
-    // Установка id на 0 перед сохранением нового пользователя
+
     newUser.setId(0);
 
-    // Хеширование пароля перед сохранением
+
     newUser.setPassword(hashPassword(newUser.getPassword()));
 
     return signUpRepository.save(newUser);

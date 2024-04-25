@@ -22,7 +22,7 @@ public class UserService {
       throw new RuntimeException("User with email " + user.getEmail() + " already exists.");
     }
 
-    // Установка id на 0 перед сохранением нового пользователя
+
     user.setId(0);
 
     String hashedPassword = passwordEncoder.encode(user.getPassword());
@@ -31,7 +31,7 @@ public class UserService {
   }
 
   public JpaUser createUser(JpaUser user) {
-    // Установка id на 0 перед сохранением нового пользователя
+
     user.setId(0);
 
     String encodedPassword = passwordEncoder.encode(user.getPassword());

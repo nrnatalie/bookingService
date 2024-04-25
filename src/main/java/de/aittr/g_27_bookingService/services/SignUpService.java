@@ -29,10 +29,10 @@ public class SignUpService {
       throw new Exception("User with this email already exists.");
     }
 
-    // Установка id на 0 перед сохранением нового пользователя
+
     newUser.setId(0);
 
-    // Хеширование пароля
+
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
     return signUpRepository.save(newUser);

@@ -20,7 +20,7 @@ public class HotelBookingService {
 
   public HotelBookingDto createHotelBooking(HotelBookingDto hotelBookingDto) {
     JpaHotelBooking jpaHotelBooking = mapper.convertToJpaHotelBooking(hotelBookingDto);
-    // Установка id на 0 перед сохранением нового бронирования
+
     jpaHotelBooking.setId(0);
     JpaHotelBooking createdBooking = hotelBookingRepository.save(jpaHotelBooking);
     return mapper.convertToHotelBookingDto(createdBooking);

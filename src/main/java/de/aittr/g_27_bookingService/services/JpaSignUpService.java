@@ -30,7 +30,7 @@ public class JpaSignUpService {
     }
 
 
-    newUser.setId(0);
+
 
 
     newUser.setPassword(hashPassword(newUser.getPassword()));

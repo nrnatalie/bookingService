@@ -23,7 +23,7 @@ public class UserService {
     }
 
 
-    user.setId(0);
+
 
     String hashedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(hashedPassword);
@@ -32,7 +32,7 @@ public class UserService {
 
   public JpaUser createUser(JpaUser user) {
 
-    user.setId(0);
+
 
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);

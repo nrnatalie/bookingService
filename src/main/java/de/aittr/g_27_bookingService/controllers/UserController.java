@@ -52,7 +52,7 @@ public class UserController {
   }
 
   private boolean isValidPassword(String password) {
-    return password.length() >= 6;
+    return password.length() >= 8;
   }
 
   private JpaUser convertUserToJpaUser(User user) {

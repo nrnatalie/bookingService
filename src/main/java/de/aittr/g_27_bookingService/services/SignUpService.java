@@ -30,7 +30,7 @@ public class SignUpService {
     }
 
 
-    newUser.setId(0);
+
 
 
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));

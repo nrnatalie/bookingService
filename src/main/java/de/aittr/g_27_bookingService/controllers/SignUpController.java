@@ -14,14 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/signup")
+@RequestMapping("/api/users")
 public class SignUpController {
 
   @Autowired
   private SignUpService signUpService;
 
 
-  @PostMapping
+  @PostMapping("/signup")
   @Operation(summary = "Register a new user")
   @ApiResponse(responseCode = "200", description = "User registered successfully")
   @ApiResponse(responseCode = "400", description = "Bad request. Invalid sign up data or failed to register user",
@@ -52,7 +52,7 @@ public class SignUpController {
   }
 
   private boolean isPasswordValid(String password) {
-    return password.length() >= 6;
+    return password.length() >= 8;
   }
 
   private boolean isEmailValid(String email) {
